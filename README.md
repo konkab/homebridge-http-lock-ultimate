@@ -1,6 +1,6 @@
-# homebridge-http-lock-mechanism
+# homebridge-http-lock-plus
 
-[![npm](https://img.shields.io/npm/v/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism) [![npm](https://img.shields.io/npm/dt/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism)
+[![npm](https://img.shields.io/npm/v/homebridge-http-lock-plus.svg)](https://www.npmjs.com/package/homebridge-http-lock-plus) [![npm](https://img.shields.io/npm/dt/homebridge-http-lock-plus.svg)](https://www.npmjs.com/package/homebridge-http-lock-plus)
 
 ## Description
 
@@ -9,7 +9,7 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 ## Installation
 
 1. Install [homebridge](https://github.com/nfarina/homebridge#installation-details)
-2. Install this plugin: `npm install -g homebridge-http-lock-mechanism`
+2. Install this plugin: `npm install -g homebridge-http-lock-plus`
 3. Update your `config.json` file
 
 ## Configuration

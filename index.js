@@ -5,7 +5,7 @@ const packageJson = require('./package.json')
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service
   Characteristic = homebridge.hap.Characteristic
-  homebridge.registerAccessory('homebridge-http-lock-mechanism', 'HTTPLock', HTTPLock)
+  homebridge.registerAccessory('homebridge-http-lock-plus', 'HTTPLock', HTTPLock)
 }
 
 function HTTPLock (log, config) {

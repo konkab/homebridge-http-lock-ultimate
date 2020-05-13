@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-http-lock-mechanism",
+  "name": "homebridge-http-lock-plus",
   "version": "1.1.4",
   "description": "Homebridge plugin for a web-based lock",
   "main": "index.js",
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tommrodrigues/homebridge-http-lock-mechanism.git"
+    "url": "git+https://github.com/funkyremi/homebridge-http-lock-plus.git"
   },
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "Tom Rodrigues",
+  "author": "Rémi Testa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tommrodrigues/homebridge-http-lock-mechanism/issues"
+    "url": "https://github.com/funkyremi/homebridge-http-lock-plus/issues"
   },
-  "homepage": "https://github.com/Tommrodrigues/homebridge-http-lock-mechanism#readme"
+  "homepage": "https://github.com/funkyremi/homebridge-http-lock-plus#readme"
 }
