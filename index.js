@@ -52,9 +52,10 @@ HTTPLock.prototype = {
     callback()
   },
 
-  _httpRequest: function (url, body, method, callback) {
+  _httpRequest: function (url, headers, body, method, callback) {
     request({
       url: url,
+      headers: headers,
       body: body,
       method: this.http_method,
       timeout: this.timeout,
@@ -69,18 +70,18 @@ HTTPLock.prototype = {
   setLockTargetState: function (value, callback) {
     var url
     var body
-    var header
+    var headers
     this.log('[+] Setting LockTargetState to %s', value)
     if (value === 1) {
       url = this.closeURL
       body = this.closeBody
-      header = this.closeHeader
+      headers = this.closeHeader
     } else {
       url = this.openURL
       body = this.openBody
-      header = this.openHeader
+      headers = this.openHeader
     }
-    this._httpRequest(url, body, this.http_method, function (error, response, responseBody) {
+    this._httpRequest(url, headers, body, this.http_method, function (error, response, responseBody) {
       if (error) {
         this.log('[!] Error setting LockTargetState: %s', error.message)
         callback(error)
