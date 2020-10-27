@@ -20,7 +20,7 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
        "accessory": "HTTPLock",
        "name": "Lock",
        "openURL": "http://myurl.com/open",
-       "openHeader": {'User-Agent': 'request'}
+       "openHeader": {\'User-Agent\': \'request\'}
        "openBody": "YourCustomPostBody"
        "closeURL": "http://myurl.com/close"
      }
