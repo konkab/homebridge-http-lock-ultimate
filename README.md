@@ -1,4 +1,4 @@
-# homebridge-http-lock-plus
+# homebridge-http-lock-ultimate
 
 [![npm](https://img.shields.io/npm/v/homebridge-http-lock-plus.svg)](https://www.npmjs.com/package/homebridge-http-lock-plus) [![npm](https://img.shields.io/npm/dt/homebridge-http-lock-plus.svg)](https://www.npmjs.com/package/homebridge-http-lock-plus)
 
