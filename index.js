@@ -24,7 +24,11 @@ function HTTPLock (log, config) {
   this.http_method = config.http_method || 'GET'
 
   this.openURL = config.openURL
+  this.openBody = config.openBody || ''
+  this.openHeader = config.openHeader || null
   this.closeURL = config.closeURL
+  this.closeBody = config.closeBody || ''
+  this.closeHeader = config.closeHeader || null
 
   this.autoLock = config.autoLock || false
   this.autoLockDelay = config.autoLockDelay || 10
@@ -64,13 +68,19 @@ HTTPLock.prototype = {
 
   setLockTargetState: function (value, callback) {
     var url
+    var body
+    var header
     this.log('[+] Setting LockTargetState to %s', value)
     if (value === 1) {
       url = this.closeURL
+      body = this.closeBody
+      header = this.closeHeader
     } else {
       url = this.openURL
+      body = this.openBody
+      header = this.openHeader
     }
-    this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
+    this._httpRequest(url, body, this.http_method, function (error, response, responseBody) {
       if (error) {
         this.log('[!] Error setting LockTargetState: %s', error.message)
         callback(error)
