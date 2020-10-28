@@ -17,13 +17,22 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 ```json
 "accessories": [
      {
-       "accessory": "HTTPLock",
-       "name": "Lock",
-       "openURL": "http://myurl.com/open",
-       "openHeader": "{\"User-Agent\": \"request\"}",
-       "openBody": "YourCustomPostBody",
-       "closeURL": "http://myurl.com/close"
-     }
+      "accessory": "HTTPLock",
+      "name": "DoorLockUltimate",
+      "autoLock": "true",
+      "autoLockDelay": "5",
+      "http_method": "POST",
+      "openURL": "https:/your.server.address/device/relay/control/",
+      "openHeader": {
+          "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "openBody": "turn=on&channel=0&id=XXXXXXX&auth_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "closeURL": "https://your.server.address/device/relay/control/",
+      "closeHeader": {
+          "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "closeBody": "turn=off&channel=0&id=XXXXXXX&auth_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      }
 ]
 ```
 
