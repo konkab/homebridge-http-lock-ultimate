@@ -1,6 +1,6 @@
 {
-  "name": "homebridge-http-lock-plus",
-  "version": "1.1.5",
+  "name": "homebridge-http-lock-ultimate",
+  "version": "1.1.9",
   "description": "Homebridge plugin for a web-based lock",
   "main": "index.js",
   "engines": {
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/funkyremi/homebridge-http-lock-plus.git"
+    "url": "git+https://github.com/TheRealSimonMlr/homebridge-http-lock-ultimate.git"
   },
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "Rémi Testa",
+  "author": "Simon Mueller",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/funkyremi/homebridge-http-lock-plus/issues"
+    "url": "https://github.com/TheRealSimonMlr/homebridge-http-lock-ultimate/issues"
   },
-  "homepage": "https://github.com/funkyremi/homebridge-http-lock-plus#readme"
+  "homepage": "https://github.com/TheRealSimonMlr/homebridge-http-lock-ultimate#readme"
 }
