@@ -5,10 +5,10 @@ const packageJson = require('./package.json')
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service
   Characteristic = homebridge.hap.Characteristic
-  homebridge.registerAccessory('homebridge-http-lock-plus', 'HTTPLock', HTTPLock)
+  homebridge.registerAccessory('homebridge-http-lock-ultimate', 'HTTPLockUltimate', HTTPLockUltimate)
 }
 
-function HTTPLock (log, config) {
+function HTTPLockUltimate (log, config) {
   this.log = log
 
   this.name = config.name
@@ -45,7 +45,7 @@ function HTTPLock (log, config) {
   this.service = new Service.LockMechanism(this.name)
 }
 
-HTTPLock.prototype = {
+HTTPLockUltimate.prototype = {
 
   identify: function (callback) {
     this.log('Identify requested!')
