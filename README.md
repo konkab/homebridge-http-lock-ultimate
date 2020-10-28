@@ -64,9 +64,9 @@ This is a configuration example for a Shelly 1 device controlled via Post Reques
 ### Optional fields
 | Key | Description | Default |
 | --- | --- | --- |
-| `autoLock` _(optional)_ | Whether your lock should re-lock after being opened | `false` |
+| `autoLock` _(optional)_ | Whether your lock should re-lock after being opened (closeURL Request gets triggered) | `false` |
 | `autoLockDelay` _(optional)_ | Time (in seconds) until your lock will auto lock if enabled | `5` |
-| `resetLock` _(optional)_ | If your lock is locking itself after opened, use this option to reset the state automatically, will be ignored when using autoLock | `false` |
+| `resetLock` _(optional)_ | If your lock is locking itself after opened, use this option to reset the state automatically (Will not call closeURL and is ignored when using autoLock) | `false` |
 | `resetLockTime` _(optional)_ | Time (in seconds) until your lock will be set to locked | `5` |
 
 ### Additional options
