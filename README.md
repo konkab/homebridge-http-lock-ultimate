@@ -12,13 +12,14 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 2. Install this plugin: `npm install -g homebridge-http-lock-ultimate`
 3. Update your `config.json` file
 
-## Configuration
+## Configuration examples
+This is a configuration example for a Shelly 1 device controlled via Post Requests to Shelly Cloud. Get's locked automatically after 5 Seconds.
 
 ```json
 "accessories": [
      {
-      "accessory": "HTTPLock",
-      "name": "DoorLockUltimate",
+      "accessory": "HTTPLockUltimate",
+      "name": "Front Door",
       "autoLock": "true",
       "autoLockDelay": "5",
       "http_method": "POST",
@@ -32,6 +33,22 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
           "Content-Type": "application/x-www-form-urlencoded"
       },
       "closeBody": "turn=off&channel=0&id=XXXXXXX&auth_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      }
+]
+```
+
+Configuration example for a Shelly 1 device controlled via Get Requests in local network. Resets it's state to locked automatically after 5 Seconds
+
+```json
+"accessories": [
+     {
+      "accessory": "HTTPLockUltimate",
+      "name": "Front Door",
+      "resetLock": "true",
+      "resetLockTime": "5",
+      "http_method": "GET",
+      "openURL": "http://192.168.X.XX/relay/0?turn=on",
+      "closeURL": "http://192.168.X.XX/relay/0?turn=off"
       }
 ]
 ```
