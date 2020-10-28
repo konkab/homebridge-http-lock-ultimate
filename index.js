@@ -118,10 +118,8 @@ HTTPLockUltimate.prototype = {
   resetLockFunction: function () {
     this.log('[+] Waiting %s seconds for resetting lock state to locked', this.resetLockTime)
     setTimeout(() => {
-      /*this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)*/
 	  this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
 	  this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
-	  console.log(this.service);
       this.log('[*] Lock State resetted')
     }, this.resetLockTime * 1000)
   },
