@@ -4,7 +4,7 @@
 
 ## Description
 
-This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, the plugin allows you to lock/unlock the device.
+This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests with post, body and header support, the plugin allows you to lock/unlock the device, i.e. Shelly 1 devices.
 
 ## Installation
 
