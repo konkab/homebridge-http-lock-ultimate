@@ -20,7 +20,7 @@ function HTTPLockUltimate (log, config) {
 
   this.username = config.username || null
   this.password = config.password || null
-  this.timeout = config.timeout || 3000
+  this.timeout = (config.timeout * 1000) || 5000
   this.http_method = config.http_method || 'GET'
 
   this.openURL = config.openURL
@@ -31,7 +31,10 @@ function HTTPLockUltimate (log, config) {
   this.closeHeader = config.closeHeader || null
 
   this.autoLock = config.autoLock || false
-  this.autoLockDelay = config.autoLockDelay || 10
+  this.autoLockDelay = config.autoLockDelay || 5
+  
+  this.resetLock = config.resetLock || false
+  this.resetLockTime = config.resetLockTime || 5
 
   if (this.username != null && this.password != null) {
     this.auth = {
@@ -95,6 +98,9 @@ HTTPLockUltimate.prototype = {
           if (this.autoLock) {
             this.autoLockFunction()
           }
+		  else if (this.resetLock) {
+			  this.resetLockFunction()
+		  }
         }
         callback()
       }
@@ -107,6 +113,17 @@ HTTPLockUltimate.prototype = {
       this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
       this.log('[*] Autolocking')
     }, this.autoLockDelay * 1000)
+  },
+  
+  resetLockFunction: function () {
+    this.log('[+] Waiting %s seconds for resetting lock state to locked', this.resetLockTime)
+    setTimeout(() => {
+      /*this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)*/
+	  this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
+	  this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
+	  console.log(this.service);
+      this.log('[*] Lock State resetted')
+    }, this.resetLockTime * 1000)
   },
 
   getServices: function () {
