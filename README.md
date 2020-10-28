@@ -56,7 +56,7 @@ This is a configuration example for a Shelly 1 device controlled via Post Reques
 ### Core
 | Key | Description | Default |
 | --- | --- | --- |
-| `accessory` | Must be `HTTPLock` | N/A |
+| `accessory` | Must be `HTTPLockUltimate` | N/A |
 | `name` | Name to appear in the Home app | N/A |
 | `openURL` | URL to trigger unlock | N/A |
 | `closeURL` | URL to trigger lock | N/A |
