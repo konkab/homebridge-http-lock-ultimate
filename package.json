@@ -1,7 +1,7 @@
 {
   "name": "homebridge-http-lock-ultimate",
   "version": "1.0.0",
-  "description": "Homebridge plugin for a simple web-based lock with post request, body and header support.",
+  "description": "This homebridge plugin exposes a web-based locking device to Apple's HomeKit. Using simple HTTP requests with post, body and header support, the plugin allows you to lock/unlock the device, i.e. Shelly 1 devices.",
   "main": "index.js",
   "engines": {
     "homebridge": ">=0.4",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheRealSimonMlr/homebridge-http-lock-ultimate.git"
+    "url": "git:TheRealSimonMlr/homebridge-http-lock-ultimate"
   },
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "Simon Mueller",
+  "author": "Simon Müller",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TheRealSimonMlr/homebridge-http-lock-ultimate/issues"
