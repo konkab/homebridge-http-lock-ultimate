@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-http-lock-ultimate",
+  "name": "homebridge-http-garage-door-ultimate",
   "version": "1.0.0",
   "description": "This homebridge plugin exposes a web-based locking device to Apple's HomeKit. Using simple HTTP requests with post, body and header support, the plugin allows you to lock/unlock the device, i.e. Shelly 1 devices.",
   "main": "index.js",

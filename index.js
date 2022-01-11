@@ -5,10 +5,10 @@ const packageJson = require('./package.json')
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service
   Characteristic = homebridge.hap.Characteristic
-  homebridge.registerAccessory('homebridge-http-lock-ultimate', 'HTTPLockUltimate', HTTPLockUltimate)
+  homebridge.registerAccessory('homebridge-http-garage-door-ultimate', 'HTTPGarageDoorUltimate', HTTPGarageDoorUltimate)
 }
 
-function HTTPLockUltimate (log, config) {
+function HTTPGarageDoorUltimate (log, config) {
   this.log = log
 
   this.name = config.name
@@ -26,15 +26,10 @@ function HTTPLockUltimate (log, config) {
   this.openURL = config.openURL
   this.openBody = config.openBody || ''
   this.openHeader = config.openHeader || null
-  this.closeURL = config.closeURL
-  this.closeBody = config.closeBody || ''
-  this.closeHeader = config.closeHeader || null
-
-  this.autoLock = config.autoLock || false
-  this.autoLockDelay = config.autoLockDelay || 5
   
-  this.resetLock = config.resetLock || false
-  this.resetLockTime = config.resetLockTime || 5
+  this.openingTime = config.openingTime || 5
+  this.closingTime = config.closingTime || 5
+  this.openedTime = config.openedTime || 5
 
   if (this.username != null && this.password != null) {
     this.auth = {
@@ -45,10 +40,10 @@ function HTTPLockUltimate (log, config) {
 
   this.log(this.name)
 
-  this.service = new Service.LockMechanism(this.name)
+  this.service = new Service.GarageDoorOpener(this.name)
 }
 
-HTTPLockUltimate.prototype = {
+HTTPGarageDoorUltimate.prototype = {
 
   identify: function (callback) {
     this.log('Identify requested!')
@@ -70,15 +65,17 @@ HTTPLockUltimate.prototype = {
     })
   },
 
-  setLockTargetState: function (value, callback) {
+  setTargetDoorState: function (value, callback) {
     var url
     var body
     var headers
-    this.log('[+] Setting LockTargetState to %s', value)
+    this.log('[+] Setting TargetDoorState to %s', value)
     if (value === 1) {
-      url = this.closeURL
-      body = this.closeBody
-      headers = this.closeHeader
+      this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED)
+      this.log('[*] Closed the garage door')
+
+      callback()
+      return
     } else {
       url = this.openURL
       body = this.openBody
@@ -86,47 +83,38 @@ HTTPLockUltimate.prototype = {
     }
     this._httpRequest(url, headers, body, this.http_method, function (error, response, responseBody) {
       if (error) {
-        this.log('[!] Error setting LockTargetState: %s', error.message)
+        this.log('[!] Error setting TargetDoorState: %s', error.message)
         callback(error)
       } else {
-        if (value === 1) {
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
-          this.log('[*] Closed the lock')
-        } else {
-          this.log('[*] Opened the lock')
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED)
-          if (this.autoLock) {
-            this.autoLockFunction()
-          }
-		  else if (this.resetLock) {
-			  this.resetLockFunction()
-		  }
+        if (value === 0) {
+          this.log('[*] Opening the garage door')
+          this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPENING)
+
+          setTimeout(() => {
+            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.OPENED)
+            this.log('[*] Garage Door State opened')
+          }, (this.openingTime) * 1000)
+
+          setTimeout(() => {
+            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.CLOSING)
+            this.log('[*] Garage Door State closing')
+          }, (this.openingTime + this.openedTime) * 1000)
+
+          setTimeout(() => {
+            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.CLOSED)
+            this.service.getCharacteristic(Characteristic.TargetDoorState).updateValue(1)
+            this.log('[*] Garage Door State closed')
+          }, (this.openingTime + this.openedTime + this.closingTime) * 1000)
         }
         callback()
       }
     }.bind(this))
   },
 
-  autoLockFunction: function () {
-    this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay)
-    setTimeout(() => {
-      this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
-      this.log('[*] Autolocking')
-    }, this.autoLockDelay * 1000)
-  },
-  
-  resetLockFunction: function () {
-    this.log('[+] Waiting %s seconds for resetting lock state to locked', this.resetLockTime)
-    setTimeout(() => {
-	  this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
-	  this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
-      this.log('[*] Lock State resetted')
-    }, this.resetLockTime * 1000)
-  },
-
   getServices: function () {
-    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
-    this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+    this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED)
+    this.service.setCharacteristic(Characteristic.TargetDoorState, Characteristic.TargetDoorState.CLOSED)
+    this.service.setCharacteristic(Characteristic.ObstructionDetected, false)
 
     this.informationService = new Service.AccessoryInformation()
     this.informationService
@@ -136,8 +124,8 @@ HTTPLockUltimate.prototype = {
       .setCharacteristic(Characteristic.FirmwareRevision, this.firmware)
 
     this.service
-      .getCharacteristic(Characteristic.LockTargetState)
-      .on('set', this.setLockTargetState.bind(this))
+      .getCharacteristic(Characteristic.TargetDoorState)
+      .on('set', this.setTargetDoorState.bind(this))
 
     return [this.informationService, this.service]
   }
