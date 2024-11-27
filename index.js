@@ -29,7 +29,7 @@ function HTTPGarageDoorUltimate (log, config) {
   
   this.openingTime = config.openingTime || 5
   this.closingTime = config.closingTime || 5
-  this.openedTime = config.openedTime || 5
+  this.openTime = config.openTime || 5
 
   if (this.username != null && this.password != null) {
     this.auth = {
@@ -91,20 +91,20 @@ HTTPGarageDoorUltimate.prototype = {
           this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPENING)
 
           setTimeout(() => {
-            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.OPENED)
-            this.log('[*] Garage Door State opened')
+            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPEN)
+            this.log('[*] Garage Door State open')
           }, (this.openingTime) * 1000)
 
           setTimeout(() => {
-            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.CLOSING)
-            this.log('[*] Garage Door State closing')
-          }, (this.openingTime + this.openedTime) * 1000)
+            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSING)
+            this.log('[*] Closing the garage door')
+          }, (this.openingTime + this.openTime) * 1000)
 
           setTimeout(() => {
-            this.service.getCharacteristic(Characteristic.CurrentDoorState).updateValue(Characteristic.CurrentDoorState.CLOSED)
+            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED)
             this.service.getCharacteristic(Characteristic.TargetDoorState).updateValue(1)
             this.log('[*] Garage Door State closed')
-          }, (this.openingTime + this.openedTime + this.closingTime) * 1000)
+          }, (this.openingTime + this.openTime + this.closingTime) * 1000)
         }
         callback()
       }
