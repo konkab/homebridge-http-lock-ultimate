@@ -85,30 +85,30 @@ HTTPGarageDoorUltimate.prototype = {
       if (error) {
         this.log('[!] Error setting TargetDoorState: %s', error.message)
         callback(error)
-      } else {
-        if (value === 0) {
-          this.log('[*] Opening the garage door')
-          this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPENING)
-
-          setTimeout(() => {
-            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPEN)
-            this.log('[*] Garage Door State open')
-          }, (this.openingTime) * 1000)
-
-          setTimeout(() => {
-            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSING)
-            this.log('[*] Closing the garage door')
-          }, (this.openingTime + this.openTime) * 1000)
-
-          setTimeout(() => {
-            this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED)
-            this.service.getCharacteristic(Characteristic.TargetDoorState).updateValue(1)
-            this.log('[*] Garage Door State closed')
-          }, (this.openingTime + this.openTime + this.closingTime) * 1000)
-        }
-        callback()
       }
     }.bind(this))
+
+    if (value === 0) {
+      this.log('[*] Opening the garage door')
+      this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPENING)
+
+      setTimeout(() => {
+        this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.OPEN)
+        this.log('[*] Garage Door State open')
+      }, (this.openingTime) * 1000)
+
+      setTimeout(() => {
+        this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSING)
+        this.log('[*] Closing the garage door')
+      }, (this.openingTime + this.openTime) * 1000)
+
+      setTimeout(() => {
+        this.service.setCharacteristic(Characteristic.CurrentDoorState, Characteristic.CurrentDoorState.CLOSED)
+        this.service.getCharacteristic(Characteristic.TargetDoorState).updateValue(1)
+        this.log('[*] Garage Door State closed')
+      }, (this.openingTime + this.openTime + this.closingTime) * 1000)
+    }
+    callback()
   },
 
   getServices: function () {
